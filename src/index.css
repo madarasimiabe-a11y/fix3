@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --bg:        #0d1b2a;
+  --bg2:       #1a2744;
+  --bg3:       #243356;
+  --gold:      #f5a623;
+  --gold-dim:  #c8811a;
+  --text:      #e8dcc8;
+  --text-dim:  #8fa3b8;
+  --border:    #2e4068;
+  --green:     #4caf50;
+  --yellow:    #f5a623;
+  --gray:      #3a4a5c;
+  --tile-size: clamp(42px, 10vw, 62px);
+  --gap:       5px;
+  --radius:    6px;
+
+  --background: 214 49% 11%;
+  --foreground: 37 40% 84%;
+  --border-color: 220 38% 30%;
+  --card: 220 42% 18%;
+  --card-foreground: 37 40% 84%;
+  --primary: 37 91% 55%;
+  --primary-foreground: 214 49% 11%;
+  --muted: 220 38% 25%;
+  --muted-foreground: 210 20% 60%;
+  --accent: 37 91% 55%;
+  --accent-foreground: 214 49% 11%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
+  --input: 220 38% 30%;
+  --ring: 37 91% 55%;
+  --radius: .5rem;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Tiles */
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text);
+  background: var(--bg2);
+  text-transform: uppercase;
+  user-select: none;
+  transition: border-color 0.1s;
+  perspective: 250px;
+}
+.tile.filled  { border-color: var(--text-dim); animation: popIn 0.1s ease; }
+.tile.green   { background: var(--green);  border-color: var(--green);  color: #fff; }
+.tile.yellow  { background: var(--yellow); border-color: var(--yellow); color: var(--bg); }
+.tile.gray    { background: var(--gray);   border-color: var(--gray);   color: var(--text); }
+.tile.flip    { animation: flipTile 0.5s ease forwards; }
+.tile.shake   { animation: shakeTile 0.4s ease; }
+.tile.bounce  { animation: bounceTile 0.5s ease; }
+
+/* Keyboard keys */
+.key {
+  height: 54px;
+  min-width: 34px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.1s, color 0.1s;
+}
+.key:active { filter: brightness(0.85); }
+.key.green  { background: var(--green);  border-color: var(--green);  color: #fff; }
+.key.yellow { background: var(--yellow); border-color: var(--yellow); color: var(--bg); }
+.key.gray   { background: var(--gray);   border-color: var(--gray);   color: var(--text-dim); }
+
+/* Animations */
+@keyframes popIn {
+  0%   { transform: scale(0.92); }
+  60%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+@keyframes flipTile {
+  0%   { transform: rotateX(0deg); }
+  50%  { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0deg); }
+}
+@keyframes shakeTile {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-7px); }
+  40%     { transform: translateX(7px); }
+  60%     { transform: translateX(-4px); }
+  80%     { transform: translateX(4px); }
+}
+@keyframes bounceTile {
+  0%,100% { transform: translateY(0); }
+  30%     { transform: translateY(-18px); }
+  60%     { transform: translateY(-7px); }
+  80%     { transform: translateY(-12px); }
+}
+
+/* Distribution bar */
+.dist-bar {
+  height: 22px;
+  border-radius: 4px;
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.8rem;
+  min-width: 28px;
+  transition: width 0.6s ease;
+}
+.dist-bar.active { background: var(--gold); color: var(--bg); }
+
+@media (max-width: 360px) {
+  :root { --tile-size: 38px; }
+  .key  { height: 46px; }
+}
